@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap | Trade Skills, Not Money</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #6c63ff;
+            --secondary: #4d44db;
+            --dark: #1e1e2c;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+
+        [data-theme="dark"] {
+            --light: #1e1e2c;
+            --dark: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: var(--light);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .cta-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8rem 5% 5rem;
+            min-height: 90vh;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content h1 span {
+            color: var(--primary);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--gray);
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-bar input {
+            padding: 0.8rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            width: 300px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .hero-image img {
+            width: 500px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Steps Section */
+        .steps {
+            padding: 5rem 10%;
+            text-align: center;
+            background-color: rgba(108, 99, 255, 0.05);
+        }
+
+        .steps h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-number {
+            background-color: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
+        }
+
+        /* Skills Grid */
+        .skills {
+            padding: 5rem 10%;
+        }
+
+        .skills h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .skill-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Skill Submission Form */
+        .offer-skill {
+            padding: 5rem 10%;
+            background-color: rgba(108, 99, 255, 0.05);
+            text-align: center;
+        }
+
+        .offer-skill h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 10% 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .footer-logo i {
+            color: var(--primary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* Dark Mode Toggle */
+        #theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 6rem;
+            }
+
+            .search-bar {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .search-bar input {
+                width: 100%;
+            }
+
+            .hero-image img {
+                width: 100%;
+                max-width: 350px;
+                margin-top: 2rem;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .form-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">
+            <i class="fas fa-exchange-alt"></i>
+            <h1>SkillSwap</h1>
+        </div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#browse">Browse Skills</a></li>
+            <li><a href="#offer-skill">Offer Skill</a></li>
+            <li><button id="theme-toggle"><i class="fas fa-moon"></i></button></li>
+        </ul>
+        <button class="cta-button">Get Started</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Trade <span>Skills</span>, Not Money</h1>
+            <p>Teach what you know, learn what you don’t. No cash needed!</p>
+            <div class="search-bar">
+                <input type="text" placeholder="What skill do you need?">
+                <button><i class="fas fa-search"></i> Find a Swap</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <!-- <img src="image1.avif" alt="" > -->
+         </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="steps">
+        <h2>How It Works</h2>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>List Your Skills</h3>
+                <p>Tell us what you can teach (coding, cooking, guitar, etc.).</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Find a Match</h3>
+                <p>Search for people who have the skills you want.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Swap & Learn</h3>
+                <p>Connect and exchange skills—no money involved!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Browse Skills -->
+    <section id="browse" class="skills">
+        <h2>Browse Available Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Web Development</h3>
+                <p>Learn HTML, CSS, JavaScript from experts.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-guitar"></i>
+                <h3>Music Lessons</h3>
+                <p>Swap guitar, piano, or singing lessons.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-language"></i>
+                <h3>Language Exchange</h3>
+                <p>Practice Spanish, French, or Japanese.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-utensils"></i>
+                <h3>Cooking</h3>
+                <p>Trade recipes and cooking techniques.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-paint-brush"></i>
+                <h3>Graphic Design</h3>
+                <p>Learn Photoshop, Illustrator, or Canva.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-dumbbell"></i>
+                <h3>Fitness Coaching</h3>
+                <p>Swap workout routines or yoga sessions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offer Your Skill Form -->
+    <section id="offer-skill" class="offer-skill">
+        <h2>Offer Your Skill</h2>
+        <div class="form-container">
+            <form id="skill-form">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" placeholder="e.g. Rushi Gurav" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email (Optional)</label>
+                    <input type="email" id="email" placeholder="e.g. rushi@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="skill-offer">Skill You Offer</label>
+                    <input type="text" id="skill-offer" placeholder="e.g. Striker" required>
+                </div>
+                <div class="form-group">
+                    <label for="skill-want">Skill You Want</label>
+                    <input type="text" id="skill-want" placeholder="e.g. Spanish Lessons" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Short Description</label>
+                    <textarea id="description" placeholder="e.g. I'm a professional striker with 5 years of experience. Looking to learn Spanish for an upcoming trip." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Offer</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-exchange-alt"></i>
+                <h2>SkillSwap</h2>
+            </div>
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/rushikesh.3323/?utm_source=ig_web_button_share_sheet"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <p> Who da fk that guy?? -Connor McGregor</p>
+    </footer>
+
+    <script>
+        // Dark/Light Mode Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.setAttribute('data-theme', 
+                body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+            );
+            themeToggle.innerHTML = body.getAttribute('data-theme') === 'dark' 
+                ? '<i class="fas fa-sun"></i>' 
+                : '<i class="fas fa-moon"></i>';
+        });
+
+        // Smooth Scrolling for Navigation Links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Form Submission
+        const skillForm = document.getElementById('skill-form');
+        skillForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const skillOffer = document.getElementById('skill-offer').value;
+            const skillWant = document.getElementById('skill-want').value;
+            
+            // Show success message
+            alert(`Thanks, ${name}! Your skill offer (${skillOffer} for ${skillWant}) has been submitted. We'll notify you when we find a match!`);
+            
+            // Reset form
+            skillForm.reset();
+        });
+    </script>
+</body>
+</html>
